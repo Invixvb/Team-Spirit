@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Info", menuName = "ScriptableObjects/Slides/Info")]
-    public class SO_Info : ScriptableObject
+    [CreateAssetMenu(fileName = "Feedback", menuName = "ScriptableObjects/Slides/Feedback")]
+    public class SO_Feedback : ScriptableObject
     {
         [Header("Text")]
         public string header;
@@ -16,14 +16,6 @@ namespace ScriptableObjects
         [Header("Images")]
         public Sprite backgroundImage;
         public Sprite headerImage;
-
-        [Header("Audio fragment")]
-        public AudioClip audioFragment;
-
-        public enum LevelOfDifficultyEnum { Beginner, Advanced }
-        
-        [Header("Level of Difficulty")]
-        public LevelOfDifficultyEnum levelOfDifficulty;
 
         //Next button
     }
