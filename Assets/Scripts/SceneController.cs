@@ -1,41 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;  
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class SceneController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private AsyncOperation _asyncOperation;
+    private Scene _currentScene;
+    private string _sceneName;
+    
+    #region Singleton pattern
+    private static SceneController _instance;
+    public static SceneController Instance
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.B))
+        get 
         {
-            resetPrefs();   
-            
+            if (!_instance)
+                _instance = FindObjectOfType<SceneController>();
+            return _instance;
         }
     }
+    #endregion
 
-    public void StartGame()
+    private void Update()
     {
-        SceneManager.LoadScene(2);
-
+        if (Input.GetKey(KeyCode.B))
+            ResetPrefs();
     }
 
-    public void ExitGame()
+    public void StartGame() => AsyncLoadScene("Level");
+    
+    private static void ResetPrefs() => PlayerPrefs.DeleteAll();
+
+    public void ExitGame() => Application.Quit();
+
+    public void AsyncLoadScene(string sceneName)
     {
-        Application.Quit();
-        
+        _sceneName = sceneName;
+
+        PlayerPrefs.Save();
+
+        _currentScene = SceneManager.GetActiveScene();
+
+        _asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        _asyncOperation.completed += AsyncOperationOnCompleted;
     }
-    private void resetPrefs()
+
+    private void AsyncOperationOnCompleted(AsyncOperation obj)
     {
-        
-        PlayerPrefs.DeleteAll();
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_sceneName));
+
+        SceneManager.UnloadSceneAsync(_currentScene);
+
+        _asyncOperation.completed -= AsyncOperationOnCompleted;
     }
 }

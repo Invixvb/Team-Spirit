@@ -1,49 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Keycode : MonoBehaviour
 {
-    private string currentPass = "123"; 
-    // Start is called before the first frame update
-    void Start()
+    private const string CurrentPass = "123";
+
+    private void Start()
     {
         if (PlayerPrefs.GetFloat("keycode") == 1)
-        {
-            
             NextScene();
-        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CheckPass(string pass)
     {
-     
-    }
-
-    public void Checkpass(string pass)
-    {
-        if (pass == currentPass)
+        if (pass == CurrentPass)
         {
-           print("" + "Correct");
-         PlayerPrefs.SetFloat("keycode", 1);
-         NextScene();
+            print("" + "Correct");
+            PlayerPrefs.SetFloat("keycode", 1);
+            NextScene();
         }
         else
         {
-           print("Try again");
-
+            print("Try again");
         }
-
     }
 
-    private void NextScene()
-    {
-
-        SceneManager.LoadScene(1);
-
-    }
-
-  
+    private static void NextScene() => SceneController.Instance.AsyncLoadScene("MainMenu");
 }

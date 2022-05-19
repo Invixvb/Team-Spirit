@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
@@ -36,8 +37,15 @@ public class CustomizationWindow : EditorWindow
     
     public void Awake()
     {
-        var allFeedbackSOs = Resources.LoadAll<SO_Feedback>("FeedbackSOs/");
-        feedbackSlideList.AddRange(allFeedbackSOs);
+        GetAllScriptableObjectsInFolder(feedbackSlideList, "FeedbackSOs/");
+    }
+
+    private void GetAllScriptableObjectsInFolder<T>(List<T> objectList, string path)
+    {
+        objectList.Clear();
+        
+        var allFeedbackSOs = Resources.LoadAll<>(path);
+        objectList.AddRange(allFeedbackSOs);
     }
     
     private void OnGUI()
