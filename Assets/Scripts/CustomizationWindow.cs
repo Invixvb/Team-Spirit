@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Reflection;
 using ScriptableObjects;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,9 +19,10 @@ public class CustomizationWindow : EditorWindow
     }
     #endregion
 
-    private int _toolbarInt;
+    private int _toolbarIntLevel;
+    private int _toolbarIntTheme;
     private readonly string[] _levelOfDifficulty = { "Beginner", "Advanced" };
-    private readonly string[] _themeSelection = {  }; //TODO: Header van de array van themes pakken.
+    private readonly string[] _themeSelection = { "Samenwerken", "Samen een Team", "Positieve emoties", "Ontmoeten", "Communicatie" }; //TODO: Header van de array van themes pakken.
     
     public List<SO_ThemeOverview> themeOverviewSlideList = new();
     public List<SO_Feedback> feedbackSlideList = new();
@@ -38,13 +39,16 @@ public class CustomizationWindow : EditorWindow
     public void Awake()
     {
         GetAllScriptableObjectsInFolder(feedbackSlideList, "FeedbackSOs/");
+        GetAllScriptableObjectsInFolder(themeOverviewSlideList, "ThemeOverviewSOs/");
     }
 
     private void GetAllScriptableObjectsInFolder<T>(List<T> objectList, string path)
     {
         objectList.Clear();
+
+        var type = objectList.GetType().GetGenericArguments()[0];
         
-        var allFeedbackSOs = Resources.LoadAll<>(path);
+        var allFeedbackSOs = Resources.LoadAll(path, type);
         objectList.AddRange(allFeedbackSOs);
     }
     
@@ -55,10 +59,10 @@ public class CustomizationWindow : EditorWindow
         GUILayout.Label("Header", EditorStyles.boldLabel);
         
         //TODO: Create/Remove theme button - Update lists
-        //TODO: Create/Remove assignment button - Update lists - Maybe doen met buttons van list toevoegen
-        //dat die dan automatisch een nieuwe aanmaakt en erin zet.
+        //TODO: Create/Remove assignment button - Update lists
         
         EditorGUILayout.PropertyField(so.FindProperty("feedbackSlideList"));
+        EditorGUILayout.PropertyField(so.FindProperty("themeOverviewSlideList"));
         
         //TODO: Elke theme heeft een eigen list met slides, en de volgorde hoe het daar staat is hoe het werkt.
         //Maybe moet ik de type aanpassen naar type slide en daar een enum met types.
@@ -67,9 +71,10 @@ public class CustomizationWindow : EditorWindow
         //TODO: Feedback en Theme overview slide list. - Theme overview hoeft maybe niet in een list
         //TODO: Dan krijg je de de difficulty daaronder, en daarna de opdrachten daarvan
         
-        _toolbarInt = GUILayout.Toolbar(_toolbarInt, _levelOfDifficulty);
+        _toolbarIntLevel = GUILayout.Toolbar(_toolbarIntLevel, _levelOfDifficulty);
+        _toolbarIntTheme = GUILayout.Toolbar(_toolbarIntTheme, _themeSelection);
 
-        switch (_toolbarInt)
+        switch (_toolbarIntLevel)
         {
             case 0:
                 BeginnerTasks();
