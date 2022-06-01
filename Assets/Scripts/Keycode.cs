@@ -24,5 +24,5 @@ public class Keycode : MonoBehaviour
         }
     }
 
-    private static void NextScene() => SceneController.Instance.AsyncLoadScene("MainMenu");
+    private static void NextScene() => SceneController.Instance.AsyncLoadScene("Settings");
 }
