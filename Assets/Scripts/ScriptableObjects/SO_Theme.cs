@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Theme", menuName = "ScriptableObjects/Themes/Theme")]
     public class SO_Theme : ScriptableObject
     {
         [Header("Text")]

@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "Feedback", menuName = "ScriptableObjects/Slides/Feedback")]
     public class SO_Feedback : ScriptableObject
     {
         [Header("Text")]
