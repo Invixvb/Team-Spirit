@@ -1,49 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HostSettings : MonoBehaviour
 {
-    private int TimePerGame,playerAmount,ThemeAmount;
-    private bool advancedSetting;
-    
-    // Start is called before the first frame update
-    void Start()
+    private int _timePerGame, _playerAmount, _themeAmount;
+    private bool _advancedSetting;
+
+    private void Start()
     {
         GameTime(30);
-        setPlayerAmount(4);
-        setThemeAmount(5);
-        setDifficulty(false);
+        SetPlayerAmount(4);
+        SetThemeAmount(5);
+        SetDifficulty(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GameTime(int timeAmount)
     {
-        
+        _timePerGame = timeAmount;
     }
 
-   public void GameTime(int timeAmount)
-   {
+    public void SetPlayerAmount(int players)
+    {
+        _playerAmount = players;
+    }
 
-       TimePerGame = timeAmount;
-   }
+    public void SetThemeAmount(int themes)
+    {
+        _themeAmount = themes;
+    }
 
-   public void setPlayerAmount(int players)
-   {
-       playerAmount = players;
-
-   }
-
-   public void setThemeAmount(int Themes)
-   {
-
-       ThemeAmount = Themes;
-   }
-
-   public void setDifficulty(bool isAdvanced)
-   {
-       advancedSetting = isAdvanced;
-
-   }
+    public void SetDifficulty(bool isAdvanced)
+    {
+        _advancedSetting = isAdvanced;
+    }
 }

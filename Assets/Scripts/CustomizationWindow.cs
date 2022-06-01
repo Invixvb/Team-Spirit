@@ -22,12 +22,14 @@ public class CustomizationWindow : EditorWindow
 
     #endregion
 
-    private int _toolbarIntLevel;
     private int _toolbarIntTheme;
+    private int _toolbarIntLevel;
+
     private readonly string[] _levelOfDifficulty = { "Beginner", "Advanced" };
 
-    private string[] _themeSelection;
-    private readonly List<string> _themeHeaderList = new();
+    private string[] _themeNamesArray;
+    private readonly List<string> _themeNamesList = new();
+    private readonly List<string> _themeHeadersList = new();
 
     public List<SO_Theme> themeList = new();
     public List<ScriptableObject> assignmentList = new();
@@ -45,24 +47,15 @@ public class CustomizationWindow : EditorWindow
 
     private void OnFocus()
     {
-        GetAllThemeHeaders();
+        UpdateThemeHeaders();
     }
 
     private void OnValidate()
     {
-        var s = _themeSelection[_toolbarIntTheme];
-
-        GetAllThemeHeaders();
-
-        for (var i = 0; i < 5; i++)
-        {
-            if (s == _themeSelection[i])
-            {
-                _toolbarIntTheme = i;
-            }
-        }
+        RememberSelectedButton();
     }
 
+    //TODO: Name field die gelijk de file name aanpast.
     //TODO: Create, delete theme werken
     //TODO: Create, delete assignment werken
     //TODO: Hij wil niet een nieuw aangemaakte Theme in de list zetten
@@ -82,18 +75,50 @@ public class CustomizationWindow : EditorWindow
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
     /// Then we add the list content to an array. So it can be integrated into the menu buttons.
     /// </summary>
-    private void GetAllThemeHeaders()
+    private void UpdateThemeHeaders()
     {
-        _themeHeaderList.Clear();
+        _themeHeadersList.Clear();
 
         for (var i = 0; i < 5; i++)
         {
             var themeHeader = themeList[i].header;
 
-            _themeHeaderList.Add(themeHeader);
+            _themeHeadersList.Add(themeHeader);
         }
 
-        _themeSelection = _themeHeaderList.ToArray();
+        _themeNamesArray = _themeHeadersList.ToArray();
+    }
+
+    /// <summary>
+    /// Here we get the current index of the selected button.
+    /// Then we update the theme headers so we make sure we have the latest headers.
+    /// Then we check which one we have selected and set the toolbar int to it.
+    /// </summary>
+    private void RememberSelectedButton()
+    {
+        var currentSelection = _themeNamesArray[_toolbarIntTheme];
+
+        UpdateThemeHeaders();
+
+        for (var i = 0; i < 5; i++)
+        {
+            if (currentSelection == _themeNamesArray[i])
+            {
+                _toolbarIntTheme = i;
+            }
+        }
+    }
+
+    private void UpdateHeaders()
+    {
+        _themeNamesList.Clear();
+
+        foreach (var theme in themeList)
+        {
+            _themeNamesList.Add(theme.name);
+        }
+
+        _themeNamesArray = _themeNamesList.ToArray();
     }
 
     /// <summary>
@@ -121,14 +146,25 @@ public class CustomizationWindow : EditorWindow
 
         GUILayout.BeginHorizontal("box");
 
+        //Create a theme by pressing the button, here we create a unique asset from SO_Theme and set it to the path.
+        //Then we focus it in our Project window and add it to the list.
         if (GUILayout.Button("Create Theme"))
         {
-            Debug.Log("Clicked Button");
+            var themeObject = CreateInstance<SO_Theme>();
+
+            var path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/ThemesSOs/Theme.asset");
+            AssetDatabase.CreateAsset(themeObject, path);
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = themeObject;
+
+            themeList.Add(themeObject);
         }
 
         if (GUILayout.Button("Delete Theme"))
         {
-            Debug.Log("Clicked Button");
+            UpdateHeaders();
+            
+            PopupDeleteWindow.Init(_themeNamesArray, themeList);
         }
 
         GUILayout.EndHorizontal();
@@ -153,7 +189,7 @@ public class CustomizationWindow : EditorWindow
 
         GUILayout.Label("Edit Assignments", EditorStyles.boldLabel);
 
-        _toolbarIntTheme = GUILayout.Toolbar(_toolbarIntTheme, _themeSelection);
+        _toolbarIntTheme = GUILayout.Toolbar(_toolbarIntTheme, _themeNamesArray);
         _toolbarIntLevel = GUILayout.Toolbar(_toolbarIntLevel, _levelOfDifficulty);
 
         EditorGUILayout.PropertyField(so.FindProperty("assignmentList"));
