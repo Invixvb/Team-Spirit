@@ -55,8 +55,10 @@ public class CustomizationWindow : EditorWindow
         RememberSelectedButton();
     }
 
+    //TODO: Maken dat je alle themes in de list kan zien, zodat ze die allemaal kan editen.
+    //Maar alleen de eerste 5 zullen tellen. En ook de namen afkorten tot eerste 3 letters.
     //TODO: Name field die gelijk de file name aanpast.
-    //TODO: Create, delete theme werken
+    
     //TODO: Create, delete assignment werken
     //TODO: Hij wil niet een nieuw aangemaakte Theme in de list zetten
     //TODO: Edit assignments laten werken
