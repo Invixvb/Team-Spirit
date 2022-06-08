@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ScriptableObjects;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -25,7 +26,7 @@ public class CustomizationWindow : EditorWindow
     private int _toolbarIntTheme;
     private int _toolbarIntLevel;
 
-    private readonly string[] _levelOfDifficulty = { "Beginner", "Advanced" };
+    private readonly string[] _levelOfDifficulty = { "Level 1", "Level 2" };
 
     private string[] _themeNamesArray;
     private readonly List<string> _themeNamesList = new();
@@ -57,11 +58,10 @@ public class CustomizationWindow : EditorWindow
 
     //TODO: Maken dat je alle themes in de list kan zien, zodat ze die allemaal kan editen.
     //Maar alleen de eerste 5 zullen tellen. En ook de namen afkorten tot eerste 3 letters.
-    //TODO: Name field die gelijk de file name aanpast.
     
     //TODO: Create, delete assignment werken
-    //TODO: Hij wil niet een nieuw aangemaakte Theme in de list zetten
     //TODO: Edit assignments laten werken
+    //TODO: Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht.
 
     /// <summary>
     /// Here we execute different methods to get all the scriptable objects from the path.
@@ -81,10 +81,8 @@ public class CustomizationWindow : EditorWindow
     {
         _themeHeadersList.Clear();
 
-        for (var i = 0; i < 5; i++)
+        foreach (var themeHeader in themeList.Select(theme => theme.header))
         {
-            var themeHeader = themeList[i].header;
-
             _themeHeadersList.Add(themeHeader);
         }
 
@@ -102,7 +100,7 @@ public class CustomizationWindow : EditorWindow
 
         UpdateThemeHeaders();
 
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < _themeNamesArray.Length; i++)
         {
             if (currentSelection == _themeNamesArray[i])
             {
@@ -111,6 +109,11 @@ public class CustomizationWindow : EditorWindow
         }
     }
 
+    /// <summary>
+    /// Here we Clear the themeName list. And add all the theme names in themeList.
+    /// And add it as an array.
+    /// We use this when deleting a theme to update the list of themes to delete.
+    /// </summary>
     private void UpdateHeaders()
     {
         _themeNamesList.Clear();
