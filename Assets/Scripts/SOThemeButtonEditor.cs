@@ -12,10 +12,13 @@ public class SOThemeButtonEditor : Editor
 
         if (GUILayout.Button("Apply Changes"))
         {
-            var path = AssetDatabase.GetAssetPath(script);
-
+            var themePath = AssetDatabase.GetAssetPath(script);
+            var folderPath = $"Assets/Resources/Slides/{script.name}";
+            
             script.name = script.header;
-            AssetDatabase.RenameAsset(path, script.header);
+            AssetDatabase.RenameAsset(themePath, script.header);
+
+            AssetDatabase.RenameAsset(folderPath, script.name);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ScriptableObjects;
@@ -7,23 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class CustomizationWindow : EditorWindow
-{
-    #region Singleton pattern
-
-    private static CustomizationWindow _instance;
-
-    public static CustomizationWindow Instance
-    {
-        get
-        {
-            if (!_instance)
-                _instance = FindObjectOfType<CustomizationWindow>();
-            return _instance;
-        }
-    }
-
-    #endregion
-
+{ 
     private int _toolbarIntTheme;
     private int _toolbarIntLevel;
 
@@ -57,9 +40,10 @@ public class CustomizationWindow : EditorWindow
         RememberSelectedButton();
     }
 
+    //TODO: Folders moeten worden aangemaakt wanneer er een thema word aangemaakt en gerenamed wanneer de header word veranderd
     //TODO: Edit assignments laten werken
-    //TODO: Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht.
-    //TODO: Mooi formatten van SO's en het menu.
+    //TODO: Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
+    //TODO: Mooi formatten van SO's en het menu
 
     /// <summary>
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
@@ -148,17 +132,34 @@ public class CustomizationWindow : EditorWindow
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = themeObject;
 
+            themeObject.header = themeObject.name;
+
+            const string themeFolderPath = "Assets/Resources/Slides";
+            AssetDatabase.CreateFolder(themeFolderPath, themeObject.name);
+            
+            var levelFolderPath = $"Assets/Resources/Slides/{themeObject.name}";
+            AssetDatabase.CreateFolder(levelFolderPath, "Level 1");
+            AssetDatabase.CreateFolder(levelFolderPath, "Level 2");
+
             themeList.Add(themeObject);
+            
+            UpdateThemeHeaders();
         }
 
         if (GUILayout.Button("Delete Theme"))
         {
             if (Selection.activeObject is SO_Theme item)
             {
-                var path = AssetDatabase.GetAssetPath(item);
-                AssetDatabase.DeleteAsset(path);
+                AssetDatabase.DeleteAsset($"Assets/Resources/Slides/{item.name}/Level 1");
+                AssetDatabase.DeleteAsset($"Assets/Resources/Slides/{item.name}/Level 2");
+                AssetDatabase.DeleteAsset($"Assets/Resources/Slides/{item.name}");
                 
+                var themePath = AssetDatabase.GetAssetPath(item);
+                AssetDatabase.DeleteAsset(themePath);
+
                 themeList.Remove(item);
+                
+                UpdateThemeHeaders();
             }
             else
                 Debug.LogError("The selected object is not of type SO_Theme");
