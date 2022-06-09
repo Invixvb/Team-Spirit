@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ScriptableObjects;
@@ -43,7 +44,7 @@ public class CustomizationWindow : EditorWindow
 
     private void Awake()
     {
-        UpdateFromScriptableObjectFolder();
+        GetScriptableObjectsFromPath(themeList, "Themes/");
     }
 
     private void OnFocus()
@@ -56,22 +57,9 @@ public class CustomizationWindow : EditorWindow
         RememberSelectedButton();
     }
 
-    //TODO: Maken dat je alle themes in de list kan zien, zodat ze die allemaal kan editen.
-    //Maar alleen de eerste 5 zullen tellen. En ook de namen afkorten tot eerste 3 letters.
-    
-    //TODO: Create, delete assignment werken
     //TODO: Edit assignments laten werken
     //TODO: Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht.
-
-    /// <summary>
-    /// Here we execute different methods to get all the scriptable objects from the path.
-    /// We do this to make sure the menu gets updated with these values on the right time.
-    /// </summary>
-    private void UpdateFromScriptableObjectFolder()
-    {
-        GetScriptableObjectsFromPath(assignmentList, "ThemeOverviewSOs/");
-        GetScriptableObjectsFromPath(themeList, "ThemesSOs/");
-    }
+    //TODO: Mooi formatten van SO's en het menu.
 
     /// <summary>
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
@@ -109,23 +97,21 @@ public class CustomizationWindow : EditorWindow
         }
     }
 
-    /// <summary>
-    /// Here we Clear the themeName list. And add all the theme names in themeList.
-    /// And add it as an array.
-    /// We use this when deleting a theme to update the list of themes to delete.
-    /// </summary>
-    private void UpdateHeaders()
+    /*private void DeleteSelectedObject<T>(T selectedClass, List<T> selectedList)
     {
-        _themeNamesList.Clear();
+        var selectedObject = Selection.activeObject;
 
-        foreach (var theme in themeList)
+        if (selectedObject is T)
         {
-            _themeNamesList.Add(theme.name);
+            var path = AssetDatabase.GetAssetPath(selectedObject);
+            AssetDatabase.DeleteAsset(path);
+                
+            selectedList.Remove(selectedObject);
         }
-
-        _themeNamesArray = _themeNamesList.ToArray();
-    }
-
+        else
+            Debug.LogError($"The selected object is not of type {selectedClass}");
+    }*/
+    
     /// <summary>
     /// Get all the scriptable objects in a certain path, any kind of list can be given here. As well as any path.
     /// It will get all the objects in that path and place it all in the list.
@@ -157,7 +143,7 @@ public class CustomizationWindow : EditorWindow
         {
             var themeObject = CreateInstance<SO_Theme>();
 
-            var path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/ThemesSOs/Theme.asset");
+            var path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Themes/Theme.asset");
             AssetDatabase.CreateAsset(themeObject, path);
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = themeObject;
@@ -167,9 +153,15 @@ public class CustomizationWindow : EditorWindow
 
         if (GUILayout.Button("Delete Theme"))
         {
-            UpdateHeaders();
-            
-            PopupDeleteWindow.Init(_themeNamesArray, themeList);
+            if (Selection.activeObject is SO_Theme item)
+            {
+                var path = AssetDatabase.GetAssetPath(item);
+                AssetDatabase.DeleteAsset(path);
+                
+                themeList.Remove(item);
+            }
+            else
+                Debug.LogError("The selected object is not of type SO_Theme");
         }
 
         GUILayout.EndHorizontal();
@@ -178,12 +170,31 @@ public class CustomizationWindow : EditorWindow
 
         if (GUILayout.Button("Create Assignment"))
         {
-            Debug.Log("Clicked Button");
+            PopupAssignmentCreateWindow.Init(_themeNamesArray, themeList);
         }
 
         if (GUILayout.Button("Delete Assignment"))
         {
-            Debug.Log("Clicked Button");
+            if (Selection.activeObject is SO_Slide item)
+            {
+                var path = AssetDatabase.GetAssetPath(item);
+                AssetDatabase.DeleteAsset(path);
+
+                switch (item.level)
+                {
+                    case 1:
+                        themeList[item.themeListIndex].levelOneSlides.Remove(item);
+                        break;
+                    case 2:
+                        themeList[item.themeListIndex].levelTwoSlides.Remove(item);
+                        break;
+                    default:
+                        Debug.LogError("Can't reach level index");
+                        break;
+                }
+            }
+            else
+                Debug.LogError("The selected object is not of type SO_Slide");
         }
 
         GUILayout.EndHorizontal();
@@ -199,24 +210,6 @@ public class CustomizationWindow : EditorWindow
 
         EditorGUILayout.PropertyField(so.FindProperty("assignmentList"));
 
-        switch (_toolbarIntLevel)
-        {
-            case 0:
-                BeginnerTasks();
-                break;
-            case 1:
-                AdvancedTasks();
-                break;
-        }
-
         so.ApplyModifiedProperties();
-    }
-
-    private void BeginnerTasks()
-    {
-    }
-
-    private void AdvancedTasks()
-    {
     }
 }
