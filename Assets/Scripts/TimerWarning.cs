@@ -1,30 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimerWarning : MonoBehaviour
 {
-    private float TimeLeft;
-    private bool gameStarted, GameIsOver;
-    private float TimeAmount;
-    // Start is called before the first frame update
-    void Start()
+    private float _timeLeft;
+    private bool _gameStarted, _gameIsOver;
+
+    private float _timeAmount;
+
+    private void Start()
     {
-        TimeLeft = TimeAmount;
+        _timeLeft = _timeAmount;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (gameStarted && !GameIsOver)
+        if (_gameStarted && !_gameIsOver)
         {
-            TimeLeft -= 1 * Time.deltaTime;
-
+            _timeLeft -= 1 * Time.deltaTime;
         }
 
-        if (TimeLeft <= 0 )
+        if (_timeLeft <= 0)
         {
-            
             
         }
     }

@@ -10,10 +10,9 @@ public class CustomizationWindow : EditorWindow
     private int _toolbarIntTheme;
     private int _toolbarIntLevel;
 
-    private readonly string[] _levelOfDifficulty = { "Level 1", "Level 2" };
+    private readonly string[] _levelOfDifficultyArray = { "Level 1", "Level 2" };
 
     private string[] _themeNamesArray;
-    private readonly List<string> _themeNamesList = new();
     private readonly List<string> _themeHeadersList = new();
 
     public List<SO_Theme> themeList = new();
@@ -40,10 +39,11 @@ public class CustomizationWindow : EditorWindow
         RememberSelectedButton();
     }
 
-    //TODO: Folders moeten worden aangemaakt wanneer er een thema word aangemaakt en gerenamed wanneer de header word veranderd
-    //TODO: Edit assignments laten werken
-    //TODO: Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
-    //TODO: Mooi formatten van SO's en het menu
+    //Zorgen dat het niet zo system heavy is: List replacement & Anderen update method
+    //Zorgen dat als je een level 2 theme hebt geselcteerd en dan de theme list order veranderd dat de assignment list update.
+    //Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
+    //Wanneer je een assignment delete, word het niet aangepast. En staat er missing object.
+    //TODO: Mooi formatten van ScriptableObjects en het menu
 
     /// <summary>
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
@@ -81,20 +81,23 @@ public class CustomizationWindow : EditorWindow
         }
     }
 
-    /*private void DeleteSelectedObject<T>(T selectedClass, List<T> selectedList)
+    private void GetEditButtonsSelected()
     {
-        var selectedObject = Selection.activeObject;
+        assignmentList.Clear();
 
-        if (selectedObject is T)
+        switch (_toolbarIntLevel)
         {
-            var path = AssetDatabase.GetAssetPath(selectedObject);
-            AssetDatabase.DeleteAsset(path);
-                
-            selectedList.Remove(selectedObject);
+            case 0:
+                assignmentList.AddRange(themeList[_toolbarIntTheme].levelOneSlides);
+                break;
+            case 1:
+                assignmentList.AddRange(themeList[_toolbarIntTheme].levelTwoSlides);
+                break;
+            default:
+                Debug.LogError("Can't reach level index");
+                break;
         }
-        else
-            Debug.LogError($"The selected object is not of type {selectedClass}");
-    }*/
+    }
     
     /// <summary>
     /// Get all the scriptable objects in a certain path, any kind of list can be given here. As well as any path.
@@ -207,7 +210,10 @@ public class CustomizationWindow : EditorWindow
         GUILayout.Label("Edit Assignments", EditorStyles.boldLabel);
 
         _toolbarIntTheme = GUILayout.Toolbar(_toolbarIntTheme, _themeNamesArray);
-        _toolbarIntLevel = GUILayout.Toolbar(_toolbarIntLevel, _levelOfDifficulty);
+        _toolbarIntLevel = GUILayout.Toolbar(_toolbarIntLevel, _levelOfDifficultyArray);
+
+        if (GUI.changed)
+            GetEditButtonsSelected();
 
         EditorGUILayout.PropertyField(so.FindProperty("assignmentList"));
 
