@@ -5,7 +5,7 @@ namespace ScriptableObjects
 {
     public class SO_Theme : ScriptableObject
     {
-        [Header("Text")]
+        [Header("Info Text")]
         public string header;
         [TextArea] public string footer;
         

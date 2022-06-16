@@ -2,19 +2,17 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Test")]
     public class SO_Slide : ScriptableObject
     {
         [HideInInspector] public int level;
-        
         [HideInInspector] public int themeListIndex;
         
-        public enum SlideType { ThemeOverview, Info, Feedback };
+        public enum SlideType { ThemeOverview, Info, Feedback }
         
         [Header("Slide Type")]
         public SlideType slideType;
         
-        [Header("Text")]
+        [Header("Info Text")]
         public string header;
         [TextArea] public string footer;
         

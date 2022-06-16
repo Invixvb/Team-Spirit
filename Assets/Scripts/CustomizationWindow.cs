@@ -38,12 +38,15 @@ public class CustomizationWindow : EditorWindow
     {
         RememberSelectedButton();
     }
-
-    //Zorgen dat het niet zo system heavy is: List replacement & Anderen update method
-    //Zorgen dat als je een level 2 theme hebt geselcteerd en dan de theme list order veranderd dat de assignment list update.
+    
+    //Als een list met level 1 & 2 hetzelfde aantal assignemtnes hebben dan laad die altijd de eerst geselecteerde.
+    //Hij kan ook thema's door elkaar halen als je dingen gaat switchen.
+    
     //Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
-    //Wanneer je een assignment delete, word het niet aangepast. En staat er missing object.
-    //TODO: Mooi formatten van ScriptableObjects en het menu
+    
+    //TODO: Tooltips voor ScriptableObjects en het menu
+    
+    //TODO: Toevoegen button waarbij je gelijk de image kan selecteren uit een panel
 
     /// <summary>
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
@@ -68,6 +71,8 @@ public class CustomizationWindow : EditorWindow
     /// </summary>
     private void RememberSelectedButton()
     {
+        if (_themeNamesArray == null) return;
+        
         var currentSelection = _themeNamesArray[_toolbarIntTheme];
 
         UpdateThemeHeaders();
@@ -81,22 +86,54 @@ public class CustomizationWindow : EditorWindow
         }
     }
 
+    /// <summary>
+    /// Here we update the assignmentList on which button in the Toolbars are selected.
+    /// So when theme 1 and level 2 are selected the level 2 list of that theme will be loaded into assignmentList.
+    /// </summary>
     private void GetEditButtonsSelected()
     {
         assignmentList.Clear();
 
-        switch (_toolbarIntLevel)
+        if (_toolbarIntLevel == 0)
         {
-            case 0:
-                assignmentList.AddRange(themeList[_toolbarIntTheme].levelOneSlides);
-                break;
-            case 1:
-                assignmentList.AddRange(themeList[_toolbarIntTheme].levelTwoSlides);
-                break;
-            default:
-                Debug.LogError("Can't reach level index");
-                break;
+            assignmentList.AddRange(themeList[_toolbarIntTheme].levelOneSlides);
         }
+        else if (_toolbarIntLevel == 1)
+        {
+            assignmentList.AddRange(themeList[_toolbarIntTheme].levelTwoSlides);
+        }
+        else
+        {
+            Debug.LogError("Can't reach level index");
+        }
+    }
+
+    /// <summary>
+    /// Create a theme by pressing the button, here we create a unique asset from SO_Theme and set it to the path.
+    /// Then we focus it in our Project window and add it to the list.
+    /// We also add the necessary folders for that theme and update the headers.
+    /// </summary>
+    private void CreateTheme()
+    {
+        var themeObject = CreateInstance<SO_Theme>();
+
+        var path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Themes/Theme.asset");
+        AssetDatabase.CreateAsset(themeObject, path);
+        EditorUtility.FocusProjectWindow();
+        Selection.activeObject = themeObject;
+
+        themeObject.header = themeObject.name;
+
+        const string themeFolderPath = "Assets/Resources/Slides";
+        AssetDatabase.CreateFolder(themeFolderPath, themeObject.name);
+            
+        var levelFolderPath = $"Assets/Resources/Slides/{themeObject.name}";
+        AssetDatabase.CreateFolder(levelFolderPath, "Level 1");
+        AssetDatabase.CreateFolder(levelFolderPath, "Level 2");
+
+        themeList.Add(themeObject);
+            
+        UpdateThemeHeaders();
     }
     
     /// <summary>
@@ -116,104 +153,70 @@ public class CustomizationWindow : EditorWindow
         objectList.AddRange(allFeedbackSOs);
     }
 
+    /// <summary>
+    /// Standard Unity Event.
+    /// We use this to display the editor window on screen and load all the UI components into it.
+    /// </summary>
     private void OnGUI()
     {
         var so = new SerializedObject(this);
+        
+        GUILayout.Space(5);
 
-        GUILayout.Label("Create stuff", EditorStyles.boldLabel);
+        GUILayout.Label("Create Objects", EditorStyles.boldLabel);
+        
+        GUILayout.Space(4);
 
-        GUILayout.BeginHorizontal("box");
-
-        //Create a theme by pressing the button, here we create a unique asset from SO_Theme and set it to the path.
-        //Then we focus it in our Project window and add it to the list.
+        GUILayout.BeginHorizontal();
+        
         if (GUILayout.Button("Create Theme"))
         {
-            var themeObject = CreateInstance<SO_Theme>();
-
-            var path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/Themes/Theme.asset");
-            AssetDatabase.CreateAsset(themeObject, path);
-            EditorUtility.FocusProjectWindow();
-            Selection.activeObject = themeObject;
-
-            themeObject.header = themeObject.name;
-
-            const string themeFolderPath = "Assets/Resources/Slides";
-            AssetDatabase.CreateFolder(themeFolderPath, themeObject.name);
-            
-            var levelFolderPath = $"Assets/Resources/Slides/{themeObject.name}";
-            AssetDatabase.CreateFolder(levelFolderPath, "Level 1");
-            AssetDatabase.CreateFolder(levelFolderPath, "Level 2");
-
-            themeList.Add(themeObject);
-            
-            UpdateThemeHeaders();
+            CreateTheme();
         }
-
-        if (GUILayout.Button("Delete Theme"))
-        {
-            if (Selection.activeObject is SO_Theme item)
-            {
-                AssetDatabase.DeleteAsset($"Assets/Resources/Slides/{item.name}/Level 1");
-                AssetDatabase.DeleteAsset($"Assets/Resources/Slides/{item.name}/Level 2");
-                AssetDatabase.DeleteAsset($"Assets/Resources/Slides/{item.name}");
-                
-                var themePath = AssetDatabase.GetAssetPath(item);
-                AssetDatabase.DeleteAsset(themePath);
-
-                themeList.Remove(item);
-                
-                UpdateThemeHeaders();
-            }
-            else
-                Debug.LogError("The selected object is not of type SO_Theme");
-        }
-
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal("box");
 
         if (GUILayout.Button("Create Assignment"))
         {
             PopupAssignmentCreateWindow.Init(_themeNamesArray, themeList);
-        }
-
-        if (GUILayout.Button("Delete Assignment"))
-        {
-            if (Selection.activeObject is SO_Slide item)
-            {
-                var path = AssetDatabase.GetAssetPath(item);
-                AssetDatabase.DeleteAsset(path);
-
-                switch (item.level)
-                {
-                    case 1:
-                        themeList[item.themeListIndex].levelOneSlides.Remove(item);
-                        break;
-                    case 2:
-                        themeList[item.themeListIndex].levelTwoSlides.Remove(item);
-                        break;
-                    default:
-                        Debug.LogError("Can't reach level index");
-                        break;
-                }
-            }
-            else
-                Debug.LogError("The selected object is not of type SO_Slide");
+            
+            GetEditButtonsSelected();
         }
 
         GUILayout.EndHorizontal();
+        
+        if (GUILayout.Button("Delete Object"))
+        {
+            if (Selection.activeObject is SO_Theme or SO_Slide )
+            {
+                PopupDeletionWindow.Init(themeList);
+            
+                UpdateThemeHeaders();
+                GetEditButtonsSelected();
+            }
+            else
+                Debug.LogError("The selected object is not of type SO_Theme or SO_Slide");
+        }
 
-        GUILayout.Label("Edit Themes and which number will be included in the game", EditorStyles.boldLabel);
+        GUILayout.Space(15);
+
+        GUILayout.Label("Edit Themes", EditorStyles.boldLabel);
 
         EditorGUILayout.PropertyField(so.FindProperty("themeList"));
-
+        
         GUILayout.Label("Edit Assignments", EditorStyles.boldLabel);
+        
+        GUILayout.Space(5);
+        
+        EditorGUI.BeginChangeCheck();
 
         _toolbarIntTheme = GUILayout.Toolbar(_toolbarIntTheme, _themeNamesArray);
         _toolbarIntLevel = GUILayout.Toolbar(_toolbarIntLevel, _levelOfDifficultyArray);
 
-        if (GUI.changed)
+        if (EditorGUI.EndChangeCheck())
+        {
             GetEditButtonsSelected();
+        }
+
+        GUILayout.Space(5);
 
         EditorGUILayout.PropertyField(so.FindProperty("assignmentList"));
 

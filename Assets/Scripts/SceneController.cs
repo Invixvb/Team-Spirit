@@ -32,6 +32,11 @@ public class SceneController : MonoBehaviour
 
     public void ExitGame() => Application.Quit();
 
+    /// <summary>
+    /// Here we load our scene we need async to the other scene that has already been active.
+    /// When this is done we execute an AsyncOperation.
+    /// </summary>
+    /// <param name="sceneName"></param>
     public void AsyncLoadScene(string sceneName)
     {
         _sceneName = sceneName;
@@ -45,6 +50,10 @@ public class SceneController : MonoBehaviour
         _asyncOperation.completed += AsyncOperationOnCompleted;
     }
 
+    /// <summary>
+    /// Here we execute an AsyncOperation to set the newly loaded scene active and unload the other one
+    /// </summary>
+    /// <param name="obj"></param>
     private void AsyncOperationOnCompleted(AsyncOperation obj)
     {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(_sceneName));
