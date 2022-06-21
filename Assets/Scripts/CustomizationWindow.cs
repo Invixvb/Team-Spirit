@@ -41,12 +41,18 @@ public class CustomizationWindow : EditorWindow
     
     //Als een list met level 1 & 2 hetzelfde aantal assignemtnes hebben dan laad die altijd de eerst geselecteerde.
     //Hij kan ook thema's door elkaar halen als je dingen gaat switchen.
+    //If I Don't manage to fix it I can always let her change everything from the theme lists.
+    
+    //Zorgen dat die de list van de themes niet leeg gooit wanneer die Unity opstart.
     
     //Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
+
+
+    //Logo van de ScriptableObjects veranderen.
     
-    //TODO: Tooltips voor ScriptableObjects en het menu
+    //Tooltips voor ScriptableObjects en het menu
     
-    //TODO: Toevoegen button waarbij je gelijk de image kan selecteren uit een panel
+    //Toevoegen button waarbij je gelijk de image kan selecteren uit een panel
 
     /// <summary>
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
@@ -134,6 +140,13 @@ public class CustomizationWindow : EditorWindow
         themeList.Add(themeObject);
             
         UpdateThemeHeaders();
+    }
+
+    private void UpdateThemeAssignmentLists()
+    {
+        //OnUnityStartup
+        //Get all the items in the folders
+        //And distribute them in the specified level in the specified theme.
     }
     
     /// <summary>

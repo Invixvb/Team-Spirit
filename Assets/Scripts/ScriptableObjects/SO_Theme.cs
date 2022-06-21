@@ -9,7 +9,7 @@ namespace ScriptableObjects
         public string header;
         [TextArea] public string footer;
         
-        [HideInInspector] public List<SO_Slide> levelOneSlides = new();
-        [HideInInspector] public List<SO_Slide> levelTwoSlides = new();
+        public List<SO_Slide> levelOneSlides = new();
+        public List<SO_Slide> levelTwoSlides = new();
     }
 }
