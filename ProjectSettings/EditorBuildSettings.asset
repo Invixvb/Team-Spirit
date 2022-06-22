@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/KeyCodeScene.unity
+    path: Assets/Scenes/KeyCode.unity
     guid: 6f628d35290c8b540bf8348fcc67963a
   - enabled: 1
     path: Assets/Scenes/Settings.unity
@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 532858c261e7830499e3583c8fe0d5cd
+  - enabled: 1
+    path: Assets/Scenes/DiceSelect.unity
+    guid: 48d98aa2e04f206448d678d64031f091
   - enabled: 1
     path: Assets/Scenes/Level.unity
     guid: 2cda990e2423bbf4892e6590ba056729

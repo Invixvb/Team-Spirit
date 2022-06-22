@@ -17,6 +17,19 @@ public class CustomizationWindow : EditorWindow
 
     public List<SO_Theme> themeList = new();
     public List<ScriptableObject> assignmentList = new();
+    
+    #region Singleton pattern
+    private static CustomizationWindow _instance;
+    public static CustomizationWindow Instance
+    {
+        get 
+        {
+            if (!_instance)
+                _instance = FindObjectOfType<CustomizationWindow>();
+            return _instance;
+        }
+    }
+    #endregion
 
     [MenuItem("Window/Game Customization Window")]
     public static void ShowWindow()
