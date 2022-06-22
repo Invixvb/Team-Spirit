@@ -8,7 +8,7 @@ public class TimerWarning : MonoBehaviour
     public float timeInMinutes;
     private float _timeAmount;
     [SerializeField] private TextMeshProUGUI text;
-    public GameObject textObj;
+    //public GameObject textObj;
     public GameObject popUpPanel;
 
     private void Start()

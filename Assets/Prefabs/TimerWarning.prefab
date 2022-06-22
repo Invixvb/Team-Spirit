@@ -340,9 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeInMinutes: 5.2
-  text: {fileID: 0}
-  textObj: {fileID: 0}
-  popUpPanel: {fileID: 0}
+  text: {fileID: 4973154531182689188}
+  popUpPanel: {fileID: 4973154530021654546}
 --- !u!1 &4973154531179626054
 GameObject:
   m_ObjectHideFlags: 0
