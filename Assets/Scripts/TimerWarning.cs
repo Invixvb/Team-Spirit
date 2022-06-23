@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class TimerWarning : MonoBehaviour
 {
     private float _timeLeft;
@@ -9,7 +9,7 @@ public class TimerWarning : MonoBehaviour
     private float _timeAmount;
     [SerializeField] private TextMeshProUGUI text;
     //public GameObject textObj;
-    public GameObject popUpPanel;
+    public GameObject popUpPanel,endPopUpPanel;
 
     private void Start()
     {
@@ -30,20 +30,24 @@ public class TimerWarning : MonoBehaviour
             _timeLeft -= 1 * Time.deltaTime;
         }
 
-        if (_timeLeft <= 5 * 60 && !_firstMark)
+        if (_timeLeft <= 20 * 60 && !_firstMark)
         {
             if (_checkTwice)
             {
-                PopUp("5 MINUTES LEFT");
+                PopUp("20 MINUTES LEFT");
             }
 
             _firstMark = true;
         }
 
-        if (_timeLeft <= 1 * 60 && _firstMark && !_noTimeLeft)
+        if (_timeLeft <= 5 * 60 && _firstMark && !_noTimeLeft)
         {
-            PopUp("1 MINUTES LEFT");
+            PopUp("5 MINUTES LEFT");
             _noTimeLeft = true;
+        }
+        if (_timeLeft <= 0.1f && _noTimeLeft )
+        {
+            EndPopUp();
         }
     }
 
@@ -53,9 +57,19 @@ public class TimerWarning : MonoBehaviour
         popUpPanel.SetActive(true);
     }
 
+    public void EndPopUp()
+    {
+        endPopUpPanel.SetActive(true);
+    }
+
     public void ResumeWarning()
     {
-        Debug.Log("IT be working tho");
+       
         popUpPanel.SetActive(false);
+    }
+
+    public void goToMainMenu()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 }
