@@ -576,8 +576,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 69586268}
-        m_TargetAssemblyTypeName: DobbelSelectScript, Assembly-CSharp
-        m_MethodName: selectTheme
+        m_TargetAssemblyTypeName: DiceSelectScript, Assembly-CSharp
+        m_MethodName: SelectTheme
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -710,8 +710,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 69586268}
-        m_TargetAssemblyTypeName: DobbelSelectScript, Assembly-CSharp
-        m_MethodName: selectTheme
+        m_TargetAssemblyTypeName: DiceSelectScript, Assembly-CSharp
+        m_MethodName: SelectTheme
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1505,8 +1505,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 69586268}
-        m_TargetAssemblyTypeName: DobbelSelectScript, Assembly-CSharp
-        m_MethodName: selectTheme
+        m_TargetAssemblyTypeName: DiceSelectScript, Assembly-CSharp
+        m_MethodName: SelectTheme
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1891,8 +1891,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 69586268}
-        m_TargetAssemblyTypeName: DobbelSelectScript, Assembly-CSharp
-        m_MethodName: selectTheme
+        m_TargetAssemblyTypeName: DiceSelectScript, Assembly-CSharp
+        m_MethodName: SelectTheme
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2430,8 +2430,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 69586268}
-        m_TargetAssemblyTypeName: DobbelSelectScript, Assembly-CSharp
-        m_MethodName: selectTheme
+        m_TargetAssemblyTypeName: DiceSelectScript, Assembly-CSharp
+        m_MethodName: SelectTheme
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2564,8 +2564,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 69586268}
-        m_TargetAssemblyTypeName: DobbelSelectScript, Assembly-CSharp
-        m_MethodName: selectTheme
+        m_TargetAssemblyTypeName: DiceSelectScript, Assembly-CSharp
+        m_MethodName: SelectTheme
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

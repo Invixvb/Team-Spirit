@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Keycode : MonoBehaviour
 {
-    private const string CurrentPass = "123";
+    private const string CurrentPass = "93843788786573798926";
 
     private void Start()
     {

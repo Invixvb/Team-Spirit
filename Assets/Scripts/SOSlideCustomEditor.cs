@@ -14,7 +14,11 @@ public class SOSlideCustomEditor : Editor
         _timeIsChangeableByPlayerCountProperty,
         _backgroundImageProperty,
         _headerImageProperty,
-        _audioFragmentProperty;
+        _audioFragmentProperty,
+        _footerBackgroundProperty,
+        _timerBackgroundProperty,
+        _previousButtonProperty,
+        _nextButtonProperty;
 
     private void OnEnable()
     {
@@ -26,6 +30,10 @@ public class SOSlideCustomEditor : Editor
         _backgroundImageProperty = serializedObject.FindProperty("backgroundImage");
         _headerImageProperty = serializedObject.FindProperty("headerImage");
         _audioFragmentProperty = serializedObject.FindProperty("audioFragment");
+        _footerBackgroundProperty = serializedObject.FindProperty("footerBackgroundImage");
+        _timerBackgroundProperty = serializedObject.FindProperty("timerBackgroundImage");
+        _previousButtonProperty = serializedObject.FindProperty("previousButtonImage");
+        _nextButtonProperty = serializedObject.FindProperty("nextButtonImage");
     }
 
     public override void OnInspectorGUI()
@@ -42,6 +50,10 @@ public class SOSlideCustomEditor : Editor
                 EditorGUILayout.PropertyField(_headerProperty, new GUIContent(_headerProperty.displayName));
                 EditorGUILayout.PropertyField(_footerProperty, new GUIContent(_footerProperty.displayName));
                 EditorGUILayout.PropertyField(_backgroundImageProperty, new GUIContent(_backgroundImageProperty.displayName));
+                EditorGUILayout.PropertyField(_footerBackgroundProperty, new GUIContent(_footerBackgroundProperty.displayName));
+                EditorGUILayout.PropertyField(_timerBackgroundProperty, new GUIContent(_timerBackgroundProperty.displayName));
+                EditorGUILayout.PropertyField(_previousButtonProperty, new GUIContent(_previousButtonProperty.displayName));
+                EditorGUILayout.PropertyField(_nextButtonProperty, new GUIContent(_nextButtonProperty.displayName));
                 break;
 
             case SO_Slide.SlideType.Info:
@@ -52,6 +64,10 @@ public class SOSlideCustomEditor : Editor
                 EditorGUILayout.PropertyField(_backgroundImageProperty, new GUIContent(_backgroundImageProperty.displayName));
                 EditorGUILayout.PropertyField(_headerImageProperty, new GUIContent(_headerImageProperty.displayName));
                 EditorGUILayout.PropertyField(_audioFragmentProperty, new GUIContent(_audioFragmentProperty.displayName));
+                EditorGUILayout.PropertyField(_footerBackgroundProperty, new GUIContent(_footerBackgroundProperty.displayName));
+                EditorGUILayout.PropertyField(_timerBackgroundProperty, new GUIContent(_timerBackgroundProperty.displayName));
+                EditorGUILayout.PropertyField(_previousButtonProperty, new GUIContent(_previousButtonProperty.displayName));
+                EditorGUILayout.PropertyField(_nextButtonProperty, new GUIContent(_nextButtonProperty.displayName));
                 break;
 
             case SO_Slide.SlideType.Feedback:
@@ -61,6 +77,10 @@ public class SOSlideCustomEditor : Editor
                 EditorGUILayout.PropertyField(_timeIsChangeableByPlayerCountProperty, new GUIContent(_timeIsChangeableByPlayerCountProperty.displayName));
                 EditorGUILayout.PropertyField(_backgroundImageProperty, new GUIContent(_backgroundImageProperty.displayName));
                 EditorGUILayout.PropertyField(_headerImageProperty, new GUIContent(_headerImageProperty.displayName));
+                EditorGUILayout.PropertyField(_footerBackgroundProperty, new GUIContent(_footerBackgroundProperty.displayName));
+                EditorGUILayout.PropertyField(_timerBackgroundProperty, new GUIContent(_timerBackgroundProperty.displayName));
+                EditorGUILayout.PropertyField(_previousButtonProperty, new GUIContent(_previousButtonProperty.displayName));
+                EditorGUILayout.PropertyField(_nextButtonProperty, new GUIContent(_nextButtonProperty.displayName));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

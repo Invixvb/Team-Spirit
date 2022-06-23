@@ -1,0 +1,33 @@
+﻿Fixen:
+- Als een list met level 1 & 2 hetzelfde aantal assignemtnes hebben dan laad die altijd de eerst geselecteerde.
+Hij kan ook thema's door elkaar halen als je dingen gaat switchen.
+If I Don't manage to fix it I can always let her change everything from the theme lists.
+
+- Fixen dat die niet elke keer 0 selecteert op de levelsetting
+    
+- Zorgen dat die de list van de themes niet leeg gooit wanneer die Unity opstart.
+    
+- Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
+
+- Clean maken van Updaten static theme list
+
+Toevoegen:
+- Logo van de ScriptableObjects veranderen.
+
+- Animaties eventueel
+
+- Automatic scaling van alle UI, Images pakken scale van sprite aan, Anchors etc.
+
+- Dynamic time
+
+- Audio player/controller
+
+- Custom cursor
+    
+- Tooltips voor ScriptableObjects en het menu
+    
+- Toevoegen button waarbij je gelijk de image kan selecteren uit een panel
+
+Als ik klaar ben:
+- HideInInspector bij de theme lists
+- Code cleanup en optimizations

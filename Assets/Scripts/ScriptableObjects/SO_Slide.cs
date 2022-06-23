@@ -14,7 +14,7 @@ namespace ScriptableObjects
         
         [Header("Info Text")]
         public string header;
-        [TextArea] public string footer;
+        [TextArea(2, 10)] public string footer;
         
         [Header("Time")]
         public int assignmentTime;
@@ -26,8 +26,13 @@ namespace ScriptableObjects
 
         [Header("Audio fragment")]
         public AudioClip audioFragment;
+        
+        [Header("UI Design")] 
+        public Sprite footerBackgroundImage;
+        public Sprite timerBackgroundImage;
 
-        //Opdracht lineup
-        //Next Button
+        [Space]
+        public Sprite previousButtonImage;
+        public Sprite nextButtonImage;
     }
 }

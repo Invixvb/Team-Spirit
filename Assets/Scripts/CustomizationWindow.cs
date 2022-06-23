@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Configs;
 using ScriptableObjects;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -17,19 +18,6 @@ public class CustomizationWindow : EditorWindow
 
     public List<SO_Theme> themeList = new();
     public List<ScriptableObject> assignmentList = new();
-    
-    #region Singleton pattern
-    private static CustomizationWindow _instance;
-    public static CustomizationWindow Instance
-    {
-        get 
-        {
-            if (!_instance)
-                _instance = FindObjectOfType<CustomizationWindow>();
-            return _instance;
-        }
-    }
-    #endregion
 
     [MenuItem("Window/Game Customization Window")]
     public static void ShowWindow()
@@ -50,22 +38,10 @@ public class CustomizationWindow : EditorWindow
     private void OnValidate()
     {
         RememberSelectedButton();
+        
+        StaticConfig.PublicConfig.ThemeList.Clear();
+        StaticConfig.PublicConfig.ThemeList.AddRange(themeList);
     }
-    
-    //Als een list met level 1 & 2 hetzelfde aantal assignemtnes hebben dan laad die altijd de eerst geselecteerde.
-    //Hij kan ook thema's door elkaar halen als je dingen gaat switchen.
-    //If I Don't manage to fix it I can always let her change everything from the theme lists.
-    
-    //Zorgen dat die de list van de themes niet leeg gooit wanneer die Unity opstart.
-    
-    //Zorgen dat wanneer Unity opstart de volgorde word opgeslagen van thema/opdracht
-
-
-    //Logo van de ScriptableObjects veranderen.
-    
-    //Tooltips voor ScriptableObjects en het menu
-    
-    //Toevoegen button waarbij je gelijk de image kan selecteren uit een panel
 
     /// <summary>
     /// Here we get all the Headers from the theme scriptable objects and add them to a list.
@@ -113,17 +89,17 @@ public class CustomizationWindow : EditorWindow
     {
         assignmentList.Clear();
 
-        if (_toolbarIntLevel == 0)
+        switch (_toolbarIntLevel)
         {
-            assignmentList.AddRange(themeList[_toolbarIntTheme].levelOneSlides);
-        }
-        else if (_toolbarIntLevel == 1)
-        {
-            assignmentList.AddRange(themeList[_toolbarIntTheme].levelTwoSlides);
-        }
-        else
-        {
-            Debug.LogError("Can't reach level index");
+            case 0:
+                assignmentList.AddRange(themeList[_toolbarIntTheme].levelOneSlides);
+                break;
+            case 1:
+                assignmentList.AddRange(themeList[_toolbarIntTheme].levelTwoSlides);
+                break;
+            default:
+                Debug.LogError("Can't reach level index");
+                break;
         }
     }
 
@@ -219,7 +195,9 @@ public class CustomizationWindow : EditorWindow
                 GetEditButtonsSelected();
             }
             else
+            {
                 Debug.LogError("The selected object is not of type SO_Theme or SO_Slide");
+            }
         }
 
         GUILayout.Space(15);

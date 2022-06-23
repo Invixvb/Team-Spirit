@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   header: Samenwerken
   footer: 
-  levelOneSlides:
-  - {fileID: 0}
+  levelOneSlides: []
   levelTwoSlides: []

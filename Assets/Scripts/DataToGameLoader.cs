@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Configs;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -13,15 +15,12 @@ public class DataToGameLoader : MonoBehaviour
     
     [Header("Buttons")]
     public Button previousButton;
-    public TextMeshProUGUI previousButtonText;
     public Button nextButton;
-    public TextMeshProUGUI nextButtonText;
     
     [Header("Header Text")]
     public TextMeshProUGUI headerText;
 
-    [Header("Local Time")]
-    public Image localTimeBackgroundImage;
+    [Header("Local Time Text")]
     public TextMeshProUGUI localTimeText;
     
     [Header("Footer")]
@@ -34,40 +33,85 @@ public class DataToGameLoader : MonoBehaviour
 
     [Header("Header Image")]
     public Image headerImage;
-    #endregion
 
-    private int _selectedThemeIndex;
-    private int _selectedLevelIndex;
+    [Header("Audio")] 
+    public AudioSource audioFragment;
+    #endregion
+    
     private int _currentSlideIndex;
     
-    private List<SO_Slide> _currentThemeLevelList = new();
-
-    private SO_Theme _selectedTheme;
-
+    private readonly List<SO_Slide> _currentThemeLevelList = new();
+    
     private void Start()
     {
-        _selectedTheme = CustomizationWindow.Instance.themeList[_selectedThemeIndex];
+        StartCoroutine(LocalTimerUpdate());
+        LoadDataFromSo();
     }
 
-    private void Update()
+    private IEnumerator LocalTimerUpdate()
     {
-        LocalTimerUpdate();
+        localTimeText.text = DateTime.Now.ToString("HH:mm");
+
+        yield return new WaitForSeconds(2f);
+        
+        StartCoroutine(LocalTimerUpdate());
     }
-    
-    private void LocalTimerUpdate() => localTimeText.text = DateTime.Now.ToString("HH:mm");
 
     private void LoadDataFromSo()
     {
+        var levelSetting = StaticConfig.PublicConfig.LevelSetting;
+        var themeList = StaticConfig.PublicConfig.ThemeList;
+        var themeSelectedIndex = StaticConfig.PublicConfig.ThemeSelectedIndex;
+
+        var selectedTheme = themeList[themeSelectedIndex];
+        
+        switch (levelSetting)
+        {
+            case 0:
+                _currentThemeLevelList.AddRange(selectedTheme.levelOneSlides);
+                break;
+            case 1:
+                _currentThemeLevelList.AddRange(selectedTheme.levelTwoSlides);
+                break;
+            default:
+                Debug.LogError("Level index not found");
+                break;
+        }
+        
         var currentSlide = _currentThemeLevelList[_currentSlideIndex];
-        _currentSlideIndex++;
+        
+        backgroundImage.sprite = currentSlide.backgroundImage;
+        headerImage.sprite = currentSlide.headerImage;
+        footerBackgroundImage.sprite = currentSlide.footerBackgroundImage;
+        timerBackgroundImage.sprite = currentSlide.timerBackgroundImage;
+        previousButton.GetComponent<Image>().sprite = currentSlide.previousButtonImage;
+        nextButton.GetComponent<Image>().sprite = currentSlide.nextButtonImage;
+
+        headerText.text = currentSlide.header;
+        footerText.text = currentSlide.footer;
+    }
+    
+    public void PreviousSlide()
+    {
+        if (_currentSlideIndex >= 1)
+        {
+            _currentSlideIndex--;
+
+            LoadDataFromSo();
+        }
     }
 
-    //nextButton.GetComponentInChildren<TextMeshProUGUI>().text = name;
-
-    //Get the host settings menu selected theme and level
-    //Get the list and put it into a list here.
+    public void NextSlide()
+    {
+        _currentSlideIndex++;
+        
+        LoadDataFromSo();
+    }
+    
     //Load in the data from the first SO_Slide into the placeholders.
     //When clicked on a next button the next SO_Slide is loaded into the placeholders.
     //Last slide button, go back and load the previous slides data.
-    //If the list is out of range/on the last index then put it onto the EndScreen slide.
+    
+    //If the list is out of range/on the last index then put it onto the EndScreen slide. But not if out of range on i.e. -1
+    //If null then disable object
 }

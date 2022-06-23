@@ -1,16 +1,16 @@
+using Configs;
 using UnityEngine;
 
 public class HostSettings : MonoBehaviour
 {
     private int _timePerGame, _playerAmount, _themeAmount;
-    private int _advancedSetting;
 
     private void Start()
     {
         GameTime(30);
         SetPlayerAmount(4);
         SetThemeAmount(5);
-        SetDifficulty(1);
+        SetDifficulty(0);
     }
 
     public void GameTime(int timeAmount)
@@ -28,8 +28,8 @@ public class HostSettings : MonoBehaviour
         _themeAmount = themes;
     }
 
-    public void SetDifficulty(int isAdvanced)
+    public void SetDifficulty(int levelAmount)
     {
-        _advancedSetting = isAdvanced;
+        StaticConfig.PublicConfig.LevelSetting = levelAmount;
     }
 }
