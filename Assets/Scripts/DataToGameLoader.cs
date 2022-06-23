@@ -108,10 +108,6 @@ public class DataToGameLoader : MonoBehaviour
         LoadDataFromSo();
     }
     
-    //Load in the data from the first SO_Slide into the placeholders.
-    //When clicked on a next button the next SO_Slide is loaded into the placeholders.
-    //Last slide button, go back and load the previous slides data.
-    
     //If the list is out of range/on the last index then put it onto the EndScreen slide. But not if out of range on i.e. -1
     //If null then disable object
 }

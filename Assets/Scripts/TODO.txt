@@ -11,10 +11,16 @@ If I Don't manage to fix it I can always let her change everything from the them
 
 - Clean maken van Updaten static theme list
 
+- Fix audio listener and event system duplication when loading scenes.
+
 Toevoegen:
 - Logo van de ScriptableObjects veranderen.
 
+- Tutorial + Documentation
+
 - Animaties eventueel
+
+- Adding colour changes to text when its another theme
 
 - Automatic scaling van alle UI, Images pakken scale van sprite aan, Anchors etc.
 
