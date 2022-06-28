@@ -9,7 +9,9 @@ public class DiceSelect : MonoBehaviour
         {
             themeIndex = Random.Range(0, 5);
         }
-
-        StaticConfig.PublicConfig.ThemeSelectedIndex = themeIndex;
+        
+        StaticConfig.PublicConfig.themeSelectedIndex = themeIndex;
+        
+        SceneController.Instance.AsyncLoadScene("Level");
     }
 }

@@ -15,17 +15,14 @@ MonoBehaviour:
   level: 1
   themeListIndex: 0
   slideType: 0
-  header: Communicatie
-  footer: 'Goede communicatie bevordert een goede samenwerking en het gevoel van
-    verbinding met elkaar. Bij een goede communicatie komen allerlei zaken kijken,
-    zoals: goed kunnen luisteren, aandacht voor wat de ander echt zegt, duidelijk
-    communiceren, feedback kunnen en durven geven, etc.'
+  header: 
+  footer: 
   assignmentTime: 0
   timeIsChangeableByPlayerCount: 0
-  backgroundImage: {fileID: 21300000, guid: 6b1f0a8755834704bb980d57bfd5463b, type: 3}
+  backgroundImage: {fileID: 21300000, guid: 7ad38ef2e20f347448427734f5e207f3, type: 3}
   headerImage: {fileID: 0}
   audioFragment: {fileID: 0}
-  footerBackgroundImage: {fileID: 21300000, guid: f21146905de5fdf4789d61a8ffd1fab8, type: 3}
-  timerBackgroundImage: {fileID: 21300000, guid: 465f7b057d4304d43b25950c979fe39f, type: 3}
-  previousButtonImage: {fileID: 21300000, guid: e0fbb7f55474d8d42beda9bfa6c378e6, type: 3}
-  nextButtonImage: {fileID: 21300000, guid: d6af60af5a79ed94f8e93c2f1ab671f8, type: 3}
+  footerBackgroundImage: {fileID: 0}
+  timerBackgroundImage: {fileID: 0}
+  previousButtonImage: {fileID: 21300000, guid: 709088a738a1ccb4395cab5fcc02abc0, type: 3}
+  nextButtonImage: {fileID: 21300000, guid: dc28d13faae82b54abce2e59d8ebbb40, type: 3}

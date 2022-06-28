@@ -5,10 +5,10 @@ namespace Configs
 {
     public class PublicConfig
     {
-        public readonly List<SO_Theme> ThemeList = new();
+        public readonly List<SO_Theme> themeList = new();
 
-        public int ThemeSelectedIndex;
+        public int themeSelectedIndex;
 
-        public int LevelSetting;
+        public int levelSetting;
     }
 }

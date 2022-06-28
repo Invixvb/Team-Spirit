@@ -26,8 +26,6 @@ public class SceneController : MonoBehaviour
             ResetPrefs();
     }
 
-    public void StartGame() => AsyncLoadScene("Level");
-    
     private static void ResetPrefs() => PlayerPrefs.DeleteAll();
 
     public void ExitGame() => Application.Quit();

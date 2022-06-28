@@ -3,15 +3,7 @@ using UnityEngine;
 
 public class HostSettings : MonoBehaviour
 {
-    private int _timePerGame, _playerAmount, _themeAmount;
-
-    private void Start()
-    {
-        GameTime(30);
-        SetPlayerAmount(4);
-        SetThemeAmount(5);
-        SetDifficulty(0);
-    }
+    private int _timePerGame, _playerAmount;
 
     public void GameTime(int timeAmount)
     {
@@ -23,13 +15,8 @@ public class HostSettings : MonoBehaviour
         _playerAmount = players;
     }
 
-    public void SetThemeAmount(int themes)
-    {
-        _themeAmount = themes;
-    }
-
     public void SetDifficulty(int levelAmount)
     {
-        StaticConfig.PublicConfig.LevelSetting = levelAmount;
+        StaticConfig.PublicConfig.levelSetting = levelAmount;
     }
 }

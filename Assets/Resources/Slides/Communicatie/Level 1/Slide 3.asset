@@ -14,20 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   themeListIndex: 0
-  slideType: 2
-  header: Feedback
-  footer: "Stel, een collega kwam vandaag flink te laat binnen bij een overleg waar
-    haar inbreng gewenst was. Ze verontschuldigde zich, maar toen jij vroeg wat er
-    gebeurd was reageerde ze fel:\u201D Ga jij me nou controleren? Je ben mijn baas
-    niet!\u201D. Je hebt het erbij gelaten, maar haar reactie zit je niet lekker
-    en je besluit haar daarom feedback te geven. Niet op het te laat komen, maar
-    op haar felle reactie."
+  slideType: 3
+  header: "Zeg eens uuuuh\u2026 Feedback"
+  footer: "Wie uit jullie groepje heeft het het langst\r\nvolgehouden om geen \u201Cuuuhhhh\u201D
+    te zeggen?\n\nDeze oefening maakt je bewust van het gebruik van\r\nhet stopwoordje
+    \u201Cuuhh\u201D. Er bestaan ook andere\r\nstopwoorden, let de komende tijd maar
+    eens op\r\nwanneer je naar een ander luistert. Stopwoordjes\r\nkomen vaak voort
+    uit een ongemakkelijk gevoel bij\r\nstiltes."
   assignmentTime: 0
   timeIsChangeableByPlayerCount: 0
-  backgroundImage: {fileID: 21300000, guid: 6b1f0a8755834704bb980d57bfd5463b, type: 3}
+  backgroundImage: {fileID: 21300000, guid: 8c98d0f5c80017e4da5032703fc4ad1f, type: 3}
   headerImage: {fileID: 0}
   audioFragment: {fileID: 0}
-  footerBackgroundImage: {fileID: 21300000, guid: f21146905de5fdf4789d61a8ffd1fab8, type: 3}
-  timerBackgroundImage: {fileID: 21300000, guid: 465f7b057d4304d43b25950c979fe39f, type: 3}
-  previousButtonImage: {fileID: 21300000, guid: e0fbb7f55474d8d42beda9bfa6c378e6, type: 3}
-  nextButtonImage: {fileID: 21300000, guid: d6af60af5a79ed94f8e93c2f1ab671f8, type: 3}
+  footerBackgroundImage: {fileID: 21300000, guid: 61b6e32079b78964aae323a05fe9f7c0, type: 3}
+  timerBackgroundImage: {fileID: 21300000, guid: 0d50180ec6dae8a4d91fe2f7b4f03f73, type: 3}
+  previousButtonImage: {fileID: 21300000, guid: 709088a738a1ccb4395cab5fcc02abc0, type: 3}
+  nextButtonImage: {fileID: 21300000, guid: dc28d13faae82b54abce2e59d8ebbb40, type: 3}

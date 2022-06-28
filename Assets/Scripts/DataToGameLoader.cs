@@ -59,12 +59,12 @@ public class DataToGameLoader : MonoBehaviour
 
     private void LoadDataFromSo()
     {
-        var levelSetting = StaticConfig.PublicConfig.LevelSetting;
-        var themeList = StaticConfig.PublicConfig.ThemeList;
-        var themeSelectedIndex = StaticConfig.PublicConfig.ThemeSelectedIndex;
+        var levelSetting = StaticConfig.PublicConfig.levelSetting;
+        var themeList = StaticConfig.PublicConfig.themeList;
+        var themeSelectedIndex = StaticConfig.PublicConfig.themeSelectedIndex;
 
         var selectedTheme = themeList[themeSelectedIndex];
-        
+
         switch (levelSetting)
         {
             case 0:
@@ -89,6 +89,25 @@ public class DataToGameLoader : MonoBehaviour
 
         headerText.text = currentSlide.header;
         footerText.text = currentSlide.footer;
+
+        //Null checks
+        backgroundImage.enabled = currentSlide.backgroundImage;
+        
+        if (!currentSlide.previousButtonImage) 
+            Debug.LogError($"No PreviousButtonImage selected");
+        
+        if (!currentSlide.nextButtonImage) 
+            Debug.LogError($"No NextButtonImage selected");
+        
+        headerText.enabled = currentSlide.header != null;
+        
+        footerBackgroundImage.enabled = currentSlide.footerBackgroundImage;
+        
+        footerText.enabled = currentSlide.footer != null;
+        
+        timerBackgroundImage.enabled = currentSlide.timerBackgroundImage;
+        
+        headerImage.enabled = currentSlide.headerImage;
     }
     
     public void PreviousSlide()
@@ -107,7 +126,4 @@ public class DataToGameLoader : MonoBehaviour
         
         LoadDataFromSo();
     }
-    
-    //If the list is out of range/on the last index then put it onto the EndScreen slide. But not if out of range on i.e. -1
-    //If null then disable object
 }

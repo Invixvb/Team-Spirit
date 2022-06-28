@@ -7,7 +7,7 @@ namespace ScriptableObjects
         [HideInInspector] public int level;
         [HideInInspector] public int themeListIndex;
         
-        public enum SlideType { ThemeOverview, Info, Feedback }
+        public enum SlideType { ThemeTitleScreen, ThemeOverview, AssignmentInfo, AssignmentFeedback }
         
         [Header("Slide Type")]
         public SlideType slideType;
